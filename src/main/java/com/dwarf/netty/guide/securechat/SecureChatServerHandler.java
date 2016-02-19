@@ -32,6 +32,7 @@ import java.net.InetAddress;
  */
 public class SecureChatServerHandler extends SimpleChannelInboundHandler<String> {
 
+	//管理所有的channel
     static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Override

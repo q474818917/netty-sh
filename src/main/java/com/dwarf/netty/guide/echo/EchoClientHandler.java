@@ -1,5 +1,8 @@
 package com.dwarf.netty.guide.echo;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
@@ -25,8 +28,24 @@ public class EchoClientHandler extends ChannelHandlerAdapter {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        ctx.writeAndFlush(firstMessage);
+    public void channelActive(ChannelHandlerContext ctx) throws Exception{
+    	BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        for (;;) {
+            String line = in.readLine();
+            if (line == null) {
+                break;
+            }
+
+            // Sends the received line to the server.
+            ctx.writeAndFlush(line + "->" + ctx.channel().remoteAddress());
+            // If user typed the 'bye' command, wait until the server closes
+            // the connection.
+            if ("bye".equals(line.toLowerCase())) {
+            	ctx.close();
+                break;
+            }
+        }
+        
     }
 
     @Override

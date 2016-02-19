@@ -28,6 +28,10 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
 /**
+ * 一个channel对应一个EventLoop，一个EventLoop也就是一个线程
+ * 服务器端，当客户端连接到达时，便会由EventLoopGroup分配一个EventLoop，EventLoop绑定一个channel
+ * Netty中一般很少直接操作channel，都是通过ChannelHandler接口来操作Handler，所有handler都是实现了channelhandler
+ * ChannelPipeline使用Handler对channel进行处理
  * Simple SSL chat client modified from {@link TelnetClient}.
  */
 public final class SecureChatClient {
