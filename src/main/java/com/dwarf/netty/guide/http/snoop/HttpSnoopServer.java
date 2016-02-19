@@ -13,9 +13,10 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package com.dwarf.netty.guide.factorial;
+package com.dwarf.netty.guide.http.snoop;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -25,15 +26,14 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
 /**
- * 自定义二进制协议
- * Receives a sequence of integers from a {@link FactorialClient} to calculate
- * the factorial of the specified integer.
- * 接收一串整数来自客户端计算（指定整数的阶乘）
+ * 实现简单的http服务器，客户端发送HttpRequest，服务器端回应HttpResponse
+ * An HTTP server that sends back the content of the received HTTP request
+ * in a pretty plaintext form.
  */
-public final class FactorialServer {
+public final class HttpSnoopServer {
 
     static final boolean SSL = System.getProperty("ssl") != null;
-    static final int PORT = Integer.parseInt(System.getProperty("port", "8322"));
+    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8443" : "8080"));
 
     public static void main(String[] args) throws Exception {
         // Configure SSL.
@@ -45,6 +45,7 @@ public final class FactorialServer {
             sslCtx = null;
         }
 
+        // Configure the server.
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -52,9 +53,14 @@ public final class FactorialServer {
             b.group(bossGroup, workerGroup)
              .channel(NioServerSocketChannel.class)
              .handler(new LoggingHandler(LogLevel.INFO))
-             .childHandler(new FactorialServerInitializer(sslCtx));
+             .childHandler(new HttpSnoopServerInitializer(sslCtx));
 
-            b.bind(PORT).sync().channel().closeFuture().sync();
+            Channel ch = b.bind(PORT).sync().channel();
+
+            System.err.println("Open your web browser and navigate to " +
+                    (SSL? "https" : "http") + "://127.0.0.1:" + PORT + '/');
+
+            ch.closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

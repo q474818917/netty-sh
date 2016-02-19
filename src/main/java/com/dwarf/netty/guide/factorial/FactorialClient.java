@@ -24,6 +24,7 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
 /**
+ * 自定义二进制协议，计算表达式：n*(n-1)!
  * Sends a sequence of integers to a {@link FactorialServer} to calculate
  * the factorial of the specified integer.
  */
@@ -32,7 +33,7 @@ public final class FactorialClient {
     static final boolean SSL = System.getProperty("ssl") != null;
     static final String HOST = System.getProperty("host", "127.0.0.1");
     static final int PORT = Integer.parseInt(System.getProperty("port", "8322"));
-    static final int COUNT = Integer.parseInt(System.getProperty("count", "1000"));
+    static final int COUNT = Integer.parseInt(System.getProperty("count", "5"));
 
     public static void main(String[] args) throws Exception {
         // Configure SSL.

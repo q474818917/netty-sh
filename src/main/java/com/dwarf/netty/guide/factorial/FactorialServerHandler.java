@@ -21,6 +21,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.math.BigInteger;
 
 /**
+ * 
  * Handler for a server-side channel.  This handler maintains stateful
  * information which is specific to a certain channel using member variables.
  * Therefore, an instance of this handler can cover only one channel.  You have
