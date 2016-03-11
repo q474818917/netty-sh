@@ -72,5 +72,15 @@
     	<artifactId>protostuff-runtime</artifactId>
     	<version>1.3.5</version>
     </dependency>
+    <dependency>
+	  <groupId>com.baidu</groupId>
+	  <artifactId>jprotobuf</artifactId>
+	  <version>1.9.4</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.baidu</groupId>
+	  <artifactId>jprotobuf-precompile-plugin</artifactId>
+	  <version>1.2.1</version>
+	</dependency>
   </dependencies>
 </project>

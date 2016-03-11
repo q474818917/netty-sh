@@ -37,7 +37,7 @@ public class EchoClientHandler extends ChannelHandlerAdapter {
             }
 
             // Sends the received line to the server.
-            ctx.writeAndFlush(line + "->" + ctx.channel().remoteAddress());
+            ctx.writeAndFlush(new String("sss"));
             // If user typed the 'bye' command, wait until the server closes
             // the connection.
             if ("bye".equals(line.toLowerCase())) {
