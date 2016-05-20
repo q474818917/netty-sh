@@ -12,6 +12,7 @@ import io.netty.channel.ChannelHandlerContext;
  * Handler implementation for the echo client.  It initiates the ping-pong
  * traffic between the echo client and server by sending the first message to
  * the server.
+ * 
  */
 public class EchoClientHandler extends ChannelHandlerAdapter {
 

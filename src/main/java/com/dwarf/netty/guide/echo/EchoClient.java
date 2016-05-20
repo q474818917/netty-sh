@@ -14,6 +14,15 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
+/**
+ * 编解码：
+ * 	StringEncoder:将String转换成ByteBuf
+ * 	ClientHandler:只负责传输String类型
+ * 	StringDecoder:将ByteBuf转换成String
+ * 	ServerHandler:只负责传输String
+ * @author jiyu
+ *
+ */
 public final class EchoClient {
 
     static final boolean SSL = System.getProperty("ssl") != null;
